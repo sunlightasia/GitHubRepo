@@ -39,5 +39,6 @@
     <core name="facility" 		instanceDir="facility"/>
     <core name="image" 			instanceDir="image"/>
     <core name="housed" 		instanceDir="housed"/>
+    <core name="property" 		instanceDir="property"/>
   </cores>
 </solr>
