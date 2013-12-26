@@ -68,8 +68,8 @@ public class StructureServiceImpl implements StructureService{
 	}
 	
 	@Override
-	public Structure findStructureByIdUser(Integer id_user) {	
-		Structure ret = null;
+	public List<Structure> findStructureByIdUser(Integer id_user) {	
+		List<Structure> ret = null;
 			
 		ret = this.getStructureMapper().findStructureByIdUser(id_user);	
 		return ret;

@@ -13,16 +13,24 @@
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  * In case of controversy the competent court is the Court of Cagliari (Italy).
  *******************************************************************************/
-package persistence.mybatis.mappers;
+package service;
 
 import java.util.List;
 
-import model.Structure;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface StructureMapper {
-	public List<Structure> findAll();
-	public List<Structure> findStructureByIdUser(Integer id_user);
-	public Structure findStructureById(Integer id);
-	public Integer updateStructure(Structure structure);
-	public Integer insertStructure(Structure structure);
+@Transactional
+public interface StructurePropertyTypeService {
+		
+	public Integer insert(Integer id_structure,Integer id_property);
+	
+	public List<Integer> findIdPropertyByIdStructure(Integer id_structure, Integer offset, Integer rownum);
+	public List<Integer> findIdByIdStructure(Integer id_structure, Integer offset, Integer rownum);
+	public Integer findPropertyIdById(Integer id);
+	public Integer findIdByIdStructureAndIdProperty(Integer id_structure, Integer id_property );
+	
+	public Integer delete(Integer id);	
+	public Integer deleteByIdProperty(Integer id_property);	
+	public Integer deleteByIdStructure(Integer id_structure);	
+		
 }

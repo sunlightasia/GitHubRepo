@@ -61,7 +61,9 @@
 			<div class="c50l">
               	  <div class="type-text">
                 		<label for="FormPropertyType"><s:text name="propertyType"/></label>
-                		<select id="FormPropertyType" name="propertyTypeList"></select>
+						<select name="id_propertyType">
+							{{#availablePropertyTypes}}<option value="{{value_id}}" {{#selected}}selected="selected"{{/selected}}>{{value_name}}</option>{{/availablePropertyTypes}}
+						</select>
               	  </div>  
 				  <div class="type-text">
                 		<label for="FormUrl"><s:text name="url"/></label>

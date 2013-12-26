@@ -81,6 +81,12 @@
 		<constructor-arg value="roomType" />
 	</bean>
 	
+	<bean id="solrServerProperty"
+		class="org.apache.solr.client.solrj.embedded.EmbeddedSolrServer">
+		<constructor-arg ref="multiCoreContainer" />
+		<constructor-arg value="propertyType" />
+	</bean>
+	
 	<bean id="solrServerSeason"
 		class="org.apache.solr.client.solrj.embedded.EmbeddedSolrServer">
 		<constructor-arg ref="multiCoreContainer" />

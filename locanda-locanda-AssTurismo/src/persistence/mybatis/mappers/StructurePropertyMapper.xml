@@ -44,5 +44,8 @@ In case of controversy the competent court is the Court of Cagliari (Italy).
     <select id="findIdByIdStructureAndIdProperty" parameterType="map" resultType="int">
         select id from structureProperty where id_structure = #{id_structure} AND id_property = #{id_property}
     </select>
-    	   
+    
+    <select id="findPropertyIdById" parameterType="map" resultType="int">
+        select id_property from structureProperty where id = #{id}
+    </select>	   
 </mapper>

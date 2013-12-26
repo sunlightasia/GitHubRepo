@@ -93,10 +93,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		}
 		
 		if (user != null && user.getPassword().equals(this.getPassword().trim())) {
-			structure = this.getStructureService().findStructureByIdUser(user.getId());
+			structure = this.getStructureService().findStructureByIdUser(user.getId()).get(0);
 			if(structure == null){
 				this.initializeStructureForUser(user.getId());
-				structure = this.getStructureService().findStructureByIdUser(user.getId());
+				structure = this.getStructureService().findStructureByIdUser(user.getId()).get(0);
 				if(structure == null){
 					this.getSession().put("user", null);
 					ret = "loginError";

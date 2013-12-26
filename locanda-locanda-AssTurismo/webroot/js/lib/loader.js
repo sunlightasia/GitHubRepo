@@ -20,7 +20,7 @@
 //load common js scripts
 steal("../helpers/common.js", "../helpers/autocomplete.js");
 // conditional file loading section
-if ( Entity.name == "roomType" || Entity.name == "room" || Entity.name == "structure") {
+if ( Entity.name == "roomType" || Entity.name == "room" || Entity.name == "structure" || Entity.name == "propertyType") {
     steal("../../css/rcarousel.css","../views/commonMedia.js");
 }
 if ( Entity.name == "room") {
@@ -31,8 +31,13 @@ if ( Entity.name == "room") {
 if ( Entity.name == "roomType") {
     steal("../models/roomTypeFacility.js", "../models/roomTypeImage.js", "../models/file.js").then("../collections/roomTypeFacility.js","../collections/availableRoomTypeFacilities.js","../collections/availableRoomTypeImages.js","../collections/roomTypeImage.js");
 }
+if ( Entity.name == "propertyType") {
+    steal("../models/propertyTypeFacility.js", "../models/propertyTypeImage.js", "../models/file.js").then("../collections/propertyTypeFacility.js","../collections/availablePropertyTypeFacilities.js","../collections/availablePropertyTypeImages.js","../collections/propertyTypeImage.js");
+}
 if ( Entity.name == "structure") {
-    steal("../models/structureFacility.js", "../models/structureImage.js", "../models/file.js").then("../collections/structureFacility.js","../collections/availableStructureFacilities.js","../collections/availableStructureImages.js","../collections/structureImage.js");
+    steal("../models/structureFacility.js", "../models/structureImage.js", "../models/file.js").then("../collections/structureFacility.js","../collections/availableStructureFacilities.js","../collections/availableStructureImages.js","../collections/structureImage.js").
+    then("../models/propertyType.js").
+    then("../collections/propertyType.js");
 }
 if ( Entity.name == "facility" ) {
     steal("jquery.fileupload.js", "jquery.fileupload-ui.js", "jquery.fileupload-uix.js").

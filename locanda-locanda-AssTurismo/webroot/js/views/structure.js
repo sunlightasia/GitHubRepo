@@ -32,14 +32,19 @@ window.EditStructureView = EditView.extend({
             id: this.model.get("id")
         });
         this.id = null;
+        this.propertyTypes = new PropertyTypes(null, {idStructure: Entity.idStructure});
+        this.availablePropertyTypes = [];
+        var self = this;
+        this.propertyTypes.fetch({
+            success: function() {
+           	 self.initializePropertyTypes();
+           	 // render again if success is called after render method.
+           	 self.render();
+           	 },
+        });
+        
         this.availableCountries = [];
         this.initializeCountries();
-        var that = this;
-        setInterval(function(){
-        	if($('#FormPropertyType') != ''){
-        		that.initPropertyTypes();	
-        	}
-        },1000);
     },
     /**
      * Initialize availableCountries property added to model and only to be used in the template.
@@ -291,6 +296,67 @@ window.EditStructureView = EditView.extend({
             {name: 'Zambia', code: 'ZM'},
             {name: 'Zimbabwe', code: 'ZW'}
             ];   
+    },
+    /**
+     * Set the list of available propertyTypes.
+     * @return {Array} array of { value_name:"", value_id:"", selected: ""} objects.
+     */
+    initializePropertyTypes: function () {
+   	 var self = this;
+        _.each(self.propertyTypes.models, function (val) {
+       	 self.availablePropertyTypes.push({
+       		 value_name: val.attributes.name,
+       		 value_id: val.attributes.id,
+       		 selected: false,
+       	 });
+        });
+        return self.availablePropertyTypes;
+    },
+    
+    setPropertyTypes: function (id_propertyType) {
+   	 var self = this;
+        _.each(self.availablePropertyTypes, function (val) {
+        val.selected = false;
+        if (val.value_id == id_propertyType) {
+       	 val.selected = true;
+        	}   		 
+        });
+        return self.availablePropertyTypes;
+    },
+    
+    render: function () {
+   	 // render main edit view
+   	 var modelToRender = this.model.toJSON();
+   	 // set additional attribute to display propertyTypes. Only for the view.
+   	 modelToRender.availablePropertyTypes = this.model.get("propertyType")? this.setPropertyTypes(this.model.get("propertyType").id) : this.setPropertyTypes( null );
+        // check for empty propertytypes
+   	 if( $.isEmptyObject(modelToRender.availablePropertyTypes)){
+   		 this.indexTemplate = $("#no-propertytype-template");
+   	 }
+   	 $(this.el).html(Mustache.to_html(this.indexTemplate.html(), modelToRender));
+        // add validation check
+        this.$(".yform").validate();
+        // renderize buttons
+        $(".btn_save").button({
+            icons: {
+                primary: "ui-icon-check"
+            }
+        });
+        //button for form reset  
+        $(".btn_reset").button({
+            icons: {
+                primary: "ui-icon-arrowreturnthick-1-w"
+            }
+        }).click(function (event) {
+            var validator = $(this).parents(".yform.json").validate();
+            validator.resetForm();
+            return false;
+        });
+        
+        // call for render associated views
+        this.renderAssociated();       
+        this.delegateEvents();
+        return this;
     },
 	/*
 	 * Initialize Property Types from server

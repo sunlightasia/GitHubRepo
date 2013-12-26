@@ -38,7 +38,7 @@ public interface StructureService {
 	public Boolean hasRoomFreeInPeriod(Integer id_structure,Integer roomId, Date dateIn, Date dateOut);
 	public Boolean hasRoomFreeForBooking(Integer id_structure,Booking booking);
 	
-	public Structure findStructureByIdUser(Integer id_user);
+	public List<Structure> findStructureByIdUser(Integer id_user);
 	public Structure findStructureById(Integer id);
 	public Integer updateStructure(Structure structure);
 	public Integer insertStructure(Structure structure);

@@ -16,11 +16,11 @@
  limitations under the License.
 -->
 
-<schema name="property" version="1.1">
+<schema name="propertyType" version="1.1">
   <types>
-	<fieldType name="int" 			class="solr.TrieIntField"	positionIncrementGap="0" 	omitNorms="true" precisionStep="0"/>
-   	<fieldtype name="string"  		class="solr.StrField" 		sortMissingLast="true" 		omitNorms="true"/>
-	<fieldType name="text_general" 	class="solr.TextField" 		positionIncrementGap="100">
+	<fieldType name="int" 			class="solr.TrieIntField" 	positionIncrementGap="0"	omitNorms="true" precisionStep="0"/>
+   	<fieldtype name="string"  		class="solr.StrField"	 	sortMissingLast="true" 		omitNorms="true"/>
+   	<fieldType name="text_general" 	class="solr.TextField" 		positionIncrementGap="100">
 		<analyzer type = "index">
      		<tokenizer class="solr.KeywordTokenizerFactory"/>
      		<filter class="solr.LowerCaseFilterFactory"/>
@@ -30,18 +30,19 @@
 
  <fields>   
   	<!-- general -->
-  	<field name="id"      			type="int"   		indexed="true"  stored="true"  	multiValued="false" required="true"/>
-  	<field name="name"    			type="string"   	indexed="true"  stored="false"  multiValued="false" /> 
+  	<field name="id"      		type="int"   		indexed="true"  stored="true"  	multiValued="false" required="true"/>
+  	<field name="name"   		type="string"  	 	indexed="true"  stored="false"  multiValued="false"/>
+  	<field name="text" 			type="text_general" indexed="true" 	stored="true" 	multiValued="true"/>
  </fields>
 
  <!-- field to use to determine and enforce document uniqueness. -->
  <uniqueKey>id</uniqueKey>
 
  <!-- field for the QueryParser to use when an explicit fieldname is absent -->
- <defaultSearchField>text</defaultSearchField>
+<defaultSearchField>text</defaultSearchField>
 
  <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
  <solrQueryParser defaultOperator="OR"/>
-
+ 
  <copyField source="name" 		dest="text"/>
 </schema>

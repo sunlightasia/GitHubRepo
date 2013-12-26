@@ -56,8 +56,6 @@ public class Structure implements Serializable {
 	private String mobile;
 	@Field
 	private String taxNumber;
-	@Field
-	private Integer propertyId;
 	
 	private List<Image> images;
 	private List<Facility> facilities;
@@ -160,12 +158,4 @@ public class Structure implements Serializable {
 	public void setTaxNumber(String taxNumber) {
 		this.taxNumber = taxNumber;
 	}
-	public Integer getPropertyId() {
-		return propertyId;
-	}
-	public void setPropertyId(Integer propertyId) {
-		this.propertyId = propertyId;
-	}
-	
-	
 }

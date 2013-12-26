@@ -13,16 +13,24 @@
  * See the Licence for the specific language governing permissions and limitations under the Licence.
  * In case of controversy the competent court is the Court of Cagliari (Italy).
  *******************************************************************************/
-package persistence.mybatis.mappers;
+/*
+ * @class PropertyTypeFacility
+ * @parent Backbone.Model
+ * @constructor
+ * Model to hold facility for propertyType
+ * @tag models
+ * @author LabOpenSource
+ */
 
-import java.util.List;
-
-import model.Structure;
-
-public interface StructureMapper {
-	public List<Structure> findAll();
-	public List<Structure> findStructureByIdUser(Integer id_user);
-	public Structure findStructureById(Integer id);
-	public Integer updateStructure(Structure structure);
-	public Integer insertStructure(Structure structure);
-}
+window.PropertyTypeFacility = Backbone.Model.extend({
+	
+    initialize: function () {
+    },
+    url: function () {
+        var base = this.urlRoot;
+        if (this.isNew()) return base;
+        return base + (base.charAt(base.length - 1) == '/' ? '' : '/') + encodeURIComponent(this.id);
+    },
+    urlRoot: "rest/propertyTypeFacilities/",
+    validate: function (attrs) {}
+});

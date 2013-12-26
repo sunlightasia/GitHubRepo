@@ -34,11 +34,11 @@
     <core name="extra" 			instanceDir="extra"/>
     <core name="room" 			instanceDir="room"/>
     <core name="roomType" 		instanceDir="roomType"/>
+    <core name="propertyType" 	instanceDir="propertyType"/>
     <core name="season" 		instanceDir="season"/>
     <core name="structure" 		instanceDir="structure"/>
     <core name="facility" 		instanceDir="facility"/>
     <core name="image" 			instanceDir="image"/>
     <core name="housed" 		instanceDir="housed"/>
-    <core name="property" 		instanceDir="property"/>
   </cores>
 </solr>

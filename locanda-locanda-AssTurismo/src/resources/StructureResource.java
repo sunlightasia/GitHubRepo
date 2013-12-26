@@ -162,7 +162,9 @@ public class StructureResource {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Structure save(Structure structure) {
-	       
+		// Get current user
+		User user = (User)RequestContextHolder.currentRequestAttributes().getAttribute("user", RequestAttributes.SCOPE_SESSION);
+		structure.setId_user(user.getId());
 		this.getStructureService().insertStructure(structure);
 		try {
 			this.getSolrServerStructure().addBean(structure);			

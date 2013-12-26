@@ -14,49 +14,51 @@
  * In case of controversy the competent court is the Court of Cagliari (Italy).
 --%>
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="/struts-tags" prefix="s" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <script>
 	Entity = {
-		name : "structure",
+		name : "propertyType",
 		model : function(options) {
-			return new Structure(options);
+			return new PropertyType(options);
 		},
 		collection : function(options) {
-			return new Structures({},options);
+			return new PropertyTypes({},options);
 		},
 		editView : function(options) {
-			return new EditStructureView(options);
+			return new EditImagesFacilitiesView(options);
 		},
 		idStructure : <s:property value="#session.user.structure.id"/>
 	};
 </script>
 <jsp:include page="layout/header_menu.jsp" />
-<link rel='stylesheet' type='text/css' href='css/screen/basemod_2col_advanced.css' />
+<link rel='stylesheet' type='text/css'
+	href='css/screen/basemod_2col_advanced.css' />
 
 <div id="main">
 	<!-- begin: #col1 - first float column -->
-    <div id="col1" role="complementary">
-    	<div id="col1_content" class="clearfix">
-    		<div>
+	<div id="col1" role="complementary">
+		<div class="clearfix" id="col1_content">
+			<div>
 				<button class="btn_add_form">
 					<s:text name="addNew" />
 				</button>
 			</div>
-	    	<div class="subcolumns" id="row-edit-container"></div>
-	    	<div id="facilities" class="rcarousel"></div>
+			<div class="subcolumns" id="row-edit-container"></div>
+			<div id="facilities" class="rcarousel"></div>
 			<div id="images" class="rcarousel"></div>
-    	</div>    	
-    </div>
-    <!-- end: #col1 -->
-    
-    <!-- begin: #col3 static column -->
-    <div id="col3" role="main">
-    	<div id="col3_content" class="clearfix">
-    	<h2>
-				<s:text name="structureSettings" />
+		</div>
+	</div>
+	<!-- end: #col1 -->
+	
+	<!-- begin: #col3 static column -->
+	<div id="col3" role="main">
+		<div class="clearfix" id="col3_content">
+			<h2>
+				<s:text name="propertyTypes" />
 			</h2>
 			<div id="toolbar-container"></div>
 			<div id="main-app">
@@ -70,6 +72,6 @@
 	</div>
 	<!-- end: #col3 -->
 </div>
-          
-<jsp:include page="templates/structure.mustache.jsp" />
+
+<jsp:include page="templates/propertyType.mustache.jsp" />
 <jsp:include page="layout/footer.jsp" />
