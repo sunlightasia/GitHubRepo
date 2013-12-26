@@ -44,6 +44,7 @@
 	<field name="taxNumber"   			type="string"  	 	indexed="true"  stored="false"  multiValued="false" />
 	<field name="notes"   			type="string"  	 	indexed="true"  stored="false"  multiValued="false" />
 	<field name="id_user"      		type="int"   		indexed="true"  stored="false"  multiValued="false" />
+	<field name="isEnable"    			type="string"   	indexed="true"  stored="false"  multiValued="false" />
   	<field name="text" 				type="text_general" indexed="true" 	stored="true" 	multiValued="true"  />
  </fields>
 
@@ -68,4 +69,5 @@
  <copyField source="url" 		dest="text"/>
  <copyField source="taxNumber" 		dest="text"/>
  <copyField source="notes" 		dest="text"/>
+ <copyField source="isEnable" 		dest="text"/>
 </schema>

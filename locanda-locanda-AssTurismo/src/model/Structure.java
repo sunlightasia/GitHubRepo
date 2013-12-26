@@ -56,6 +56,8 @@ public class Structure implements Serializable {
 	private String mobile;
 	@Field
 	private String taxNumber;
+	@Field
+	private Character isEnable;
 	
 	private List<Image> images;
 	private List<Facility> facilities;
@@ -157,5 +159,11 @@ public class Structure implements Serializable {
 	}
 	public void setTaxNumber(String taxNumber) {
 		this.taxNumber = taxNumber;
+	}
+	public Character getIsEnable() {
+		return isEnable;
+	}
+	public void setIsEnable(Character isEnable) {
+		this.isEnable = isEnable;
 	}
 }

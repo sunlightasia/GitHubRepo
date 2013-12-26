@@ -49,10 +49,16 @@
 						{{#availableCountries}}<option value="{{code}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>{{/availableCountries}}
 					</select>
            	 	  </div>
-				<div class="type-text">
+				  <div class="type-text">
 					<label for="FormEmail"><s:text name="email"/><sup title="<s:text name="thisFileMandatory"/>.">*</sup></label>
                 	<input type="text" class="required email" name="email" id="FormEmail" value="{{email}}" aria-required="true" size="20" />
               	  </div>
+				  <div class="type-select">
+                	<label for="FormStatus"><s:text name="status"/>:</label>
+                  	<select name="isEnable" id="FormStatus" size="1" aria-required="true">
+						{{#availableStatus}}<option value="{{value}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>{{/availableStatus}}
+					</select>
+           	 	  </div>
 				  <div class="type-button">
                   	<button class="btn_save"><s:text name="save"/></button>
                     <button class="btn_reset btn_cancel_form"><s:text name="cancel"/></button>
@@ -142,6 +148,10 @@
        					<strong><s:text name="email"/>:</strong>
                     	<span>{{email}}</span>
       		      	</div>
+					<div class="type-text">	
+                  		<strong><s:text name="status"/>:</strong>
+                		<span>{{isEnable}}</span>
+                  	</div>
               	</div>
 				<div class="c50l">
 					<div class="type-text">	

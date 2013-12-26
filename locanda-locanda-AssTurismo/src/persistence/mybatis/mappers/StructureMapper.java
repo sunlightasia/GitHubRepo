@@ -16,12 +16,14 @@
 package persistence.mybatis.mappers;
 
 import java.util.List;
+import java.util.Map;
 
 import model.Structure;
 
 public interface StructureMapper {
 	public List<Structure> findAll();
 	public List<Structure> findStructureByIdUser(Integer id_user);
+	public List<Structure> findStructureByIdUserByStatus(Map param);
 	public Structure findStructureById(Integer id);
 	public Integer updateStructure(Structure structure);
 	public Integer insertStructure(Structure structure);

@@ -44,7 +44,9 @@ window.EditStructureView = EditView.extend({
         });
         
         this.availableCountries = [];
+        this.availableStatus = [];
         this.initializeCountries();
+        this.initializeStatus();
     },
     /**
      * Initialize availableCountries property added to model and only to be used in the template.
@@ -298,6 +300,15 @@ window.EditStructureView = EditView.extend({
             ];   
     },
     /**
+     * Initialize availableStatus property added to model and only to be used in the template.
+     */
+    initializeStatus: function () {
+            this.availableStatus=[
+            {name: 'Enable', value: '1'},
+            {name: 'Disable', value: '0'}
+            ];   
+    },
+    /**
      * Set the list of available propertyTypes.
      * @return {Array} array of { value_name:"", value_id:"", selected: ""} objects.
      */
@@ -419,6 +430,21 @@ window.EditStructureView = EditView.extend({
         return this.availableCountries;
     },
     /**
+     * Set the saved status in the list of available status.
+     * @param {String} status to be setted.
+     * @return {Array} array of { value:"", selected: ""} objects.
+     */
+    setStatus: function (status) {
+    	status = (status && status.length > 0) ? status : '0'; 
+        _.each(this.availableStatus, function (val) {
+            val.selected = false;
+            if (val.value == status) {
+                val.selected = true;
+            }
+        });
+        return this.availableStatus;
+    },
+    /**
      * Initialize guest properties added to model and only to be used in the template.
      */
     render: function () {
@@ -426,6 +452,9 @@ window.EditStructureView = EditView.extend({
         var modelToRender = this.model.toJSON();
         // set additional attribute to display years. Only for the view.
         modelToRender.availableCountries = this.setCountries(this.model.get("country"));
+        $(this.el).html(Mustache.to_html(this.indexTemplate.html(), modelToRender));
+        // render status select
+        modelToRender.availableStatus = this.setStatus(this.model.get("isEnable"));
         $(this.el).html(Mustache.to_html(this.indexTemplate.html(), modelToRender));
         // add validation check
         this.$(".yform").validate();

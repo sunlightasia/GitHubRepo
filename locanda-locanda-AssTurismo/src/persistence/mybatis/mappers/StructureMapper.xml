@@ -27,24 +27,28 @@ In case of controversy the competent court is the Court of Cagliari (Italy).
         <include refid="selectStructure"/>WHERE id_user = #{id_user}
     </select>
     
+    <select id="findStructureByIdUserByStatus" parameterType="map" resultType="model.Structure">
+        <include refid="selectStructure"/>WHERE id_user = #{id_user} AND isEnable = #{status}
+    </select>
+    
     <select id="findStructureById" parameterType="int" resultType="model.Structure">
         <include refid="selectStructure"/>WHERE id = #{id}
     </select>
 	
     <update id="updateStructure" parameterType="model.Structure">
         UPDATE structure
-        set name= #{name},email= #{email},url= #{url},phone= #{phone},fax= #{fax},address= #{address},city= #{city},country= #{country},zipCode= #{zipCode},notes= #{notes},id_user= #{id_user},mobile= #{mobile},taxNumber= #{taxNumber}
+        set name= #{name},email= #{email},url= #{url},phone= #{phone},fax= #{fax},address= #{address},city= #{city},country= #{country},zipCode= #{zipCode},notes= #{notes},id_user= #{id_user},mobile= #{mobile},taxNumber= #{taxNumber},isEnable= #{isEnable}
         WHERE id = #{id}
     </update>
 	
     <insert id="insertStructure" useGeneratedKeys="true" keyProperty="id" parameterType="model.Structure">
         INSERT INTO
-        structure(name,email,url,phone,mobile,fax,address,city,country,zipCode,notes,taxNumber,id_user)
-        values(#{name}, #{email}, #{url}, #{phone}, #{mobile}, #{fax}, #{address}, #{city}, #{country}, #{zipCode}, #{notes}, #{taxNumber}, #{id_user})
+        structure(name,email,url,phone,mobile,fax,address,city,country,zipCode,notes,taxNumber,id_user,isEnable)
+        values(#{name}, #{email}, #{url}, #{phone}, #{mobile}, #{fax}, #{address}, #{city}, #{country}, #{zipCode}, #{notes}, #{taxNumber}, #{id_user}, #{isEnable})
     </insert>
     
     <sql id="selectStructure">
-        SELECT id,name,email,url,phone,mobile,fax,address,city,country,zipCode,notes,taxNumber,id_user FROM structure
+        SELECT id,name,email,url,phone,mobile,fax,address,city,country,zipCode,notes,taxNumber,id_user,isEnable FROM structure
     </sql>
     
 </mapper>
