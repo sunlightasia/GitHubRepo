@@ -169,7 +169,6 @@ public class StructureResource {
 
 		// if this structure set is enable then other structures will be set
 		// disable.
-		boolean isEnable = false;
 		if (structure.getIsEnable().equals(LocandaConstants.STRUCTURE_IS_ENABLE)) {
 			// Get all structure of current user have status isEnable = '1'
 			List<Structure> structures = this.getStructureService().findStructureByIdUserByStatus(user.getId(), LocandaConstants.STRUCTURE_IS_ENABLE);
@@ -180,11 +179,8 @@ public class StructureResource {
 					this.updateStructure(s);
 				}
 			}
-
-			isEnable = true;
 		}
 
-		Integer structureId = this.getStructureService().insertStructure(structure);
 		try {
 			this.getSolrServerStructure().addBean(structure);
 			this.getSolrServerStructure().commit();
@@ -193,13 +189,6 @@ public class StructureResource {
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		}
-
-		// Set user to session
-		// if (isEnable) {
-		// structure.setId(structureId);
-		// user.setStructure(structure);
-		// this.getSession().put("user", user);
-		// }
 
 		return structure;
 	}
@@ -214,7 +203,6 @@ public class StructureResource {
 
 		// if this structure set is enable then other structures will be set
 		// disable.
-		boolean isEnable = false;
 		if (structure.getIsEnable().equals(LocandaConstants.STRUCTURE_IS_ENABLE)) {
 			// Get all structure of current user have status isEnable = '1'
 			List<Structure> structures = this.getStructureService().findStructureByIdUserByStatus(user.getId(), LocandaConstants.STRUCTURE_IS_ENABLE);
@@ -226,15 +214,25 @@ public class StructureResource {
 				}
 			}
 
-			isEnable = true;
+			this.updateStructure(structure);
+		} else if (structure.getIsEnable().equals(LocandaConstants.STRUCTURE_IS_DISABLE)) {
+			// Get all structure of current user have status isEnable = '1'
+			List<Structure> structures = this.getStructureService().findStructureByIdUserByStatus(user.getId(), LocandaConstants.STRUCTURE_IS_ENABLE);
+			if (structures == null || structures.isEmpty()) {
+				new Exception("You can not update this Structure to disable. Because system must have 1 structure be enabled.");
+				return null;
+			} else {
+				for (Structure s : structures) {
+					// If this structure enable in database
+					if(s.getId().equals(structure.getId())){
+						new Exception("You can not update this Structure to disable. Because system must have 1 structure be enabled.");
+						return null;
+					}
+				}
+				this.updateStructure(structure);
+			}
 		}
-		this.updateStructure(structure);
 
-		// Set user to session
-		// if (isEnable) {
-		// user.setStructure(structure);
-		// this.getSession().put("user", user);
-		// }
 		return structure;
 	}
 

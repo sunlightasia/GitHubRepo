@@ -159,7 +159,14 @@
                  }
                  $.jGrowl($.i18n("congratulation"), { header: this.alertOK, position: 'top-right' });
                  self.switchMode();
-                 
+
+                 // Logout if this structure be enabled.
+                 if(item.urlRoot == 'rest/structures/' && self.model.attributes.isEnable == '1'){
+                	 $.jGrowl($.i18n("informLogout"), { header: this.alertOK, position: 'top-right' });
+                	 setTimeout(function(){
+                		 window.location.href = $(".logout").attr('href');
+                	 },2000);
+                 }
              },
              error: function () {
                  $.jGrowl($.i18n("seriousErrorDescr"),  { theme: "notify-error",sticky: true  });
