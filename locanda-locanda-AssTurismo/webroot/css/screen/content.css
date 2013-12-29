@@ -15,6 +15,10 @@
  * @appdef yaml
  */
 
+@import url(../lib/token-input-facebook.css);
+@import url(../lib/token-input-mac.css);
+@import url(../lib/token-input.css);
+
 @media all
 {
  /**

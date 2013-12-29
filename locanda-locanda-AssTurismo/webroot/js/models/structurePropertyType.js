@@ -31,6 +31,6 @@ window.StructurePropertyType = Backbone.Model.extend({
         if (this.isNew()) return base;
         return base + (base.charAt(base.length - 1) == '/' ? '' : '/') + encodeURIComponent(this.id);
     },
-    urlRoot: "rest/structureFacilities/",
+    urlRoot: "rest/structurePropertyTypes/",
     validate: function (attrs) {}
 });

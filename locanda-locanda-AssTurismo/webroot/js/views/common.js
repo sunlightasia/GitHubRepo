@@ -147,8 +147,13 @@
         	 return;
          }
          
-         var self = this,
-             is_new = this.model.isNew() ? true : false,
+         var self = this;
+         
+         // If this is action which save structure.
+         if(self.model.urlRoot == 'rest/structures/'){
+         }
+         
+         var is_new = this.model.isNew() ? true : false,
              item = this.model.clone();
          item.save($("#edit-form").serializeObject(), {
              success: function (model, resp) {

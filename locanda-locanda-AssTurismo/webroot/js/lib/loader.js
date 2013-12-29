@@ -37,7 +37,9 @@ if ( Entity.name == "propertyType") {
 if ( Entity.name == "structure") {
     steal("../models/structureFacility.js", "../models/structureImage.js", "../models/file.js").then("../collections/structureFacility.js","../collections/availableStructureFacilities.js","../collections/availableStructureImages.js","../collections/structureImage.js").
     then("../models/propertyType.js").
-    then("../collections/propertyType.js");
+    then("../collections/propertyType.js").
+    then("../models/structurePropertyType.js").
+    then("../collections/structurePropertyType.js");
 }
 if ( Entity.name == "facility" ) {
     steal("jquery.fileupload.js", "jquery.fileupload-ui.js", "jquery.fileupload-uix.js").

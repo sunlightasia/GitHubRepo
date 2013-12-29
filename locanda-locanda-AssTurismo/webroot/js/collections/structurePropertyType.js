@@ -31,7 +31,7 @@ window.StructurePropertyTypes = Backbone.Collection.extend({
     	this.setTerm(null);
     },
     url: function () {
-        return 'rest/facilities/checked/structure/'+ this.idWrapper  + this.from + this.to + '?term=' + this.term ;
+        return 'rest/structurePropertyTypes/checked/structure/'+ this.idWrapper  + this.from + this.to + '?term=' + this.term ;
     },
     setTerm: function (aTerm) {
         this.term = (typeof aTerm !== "undefined" && aTerm) ? aTerm : '';

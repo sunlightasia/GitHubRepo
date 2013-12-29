@@ -7,7 +7,6 @@
  * @author LabOpenSource
  */
 window.EditStructureView = EditView.extend({
-	availablePropertyTypes:[], // list of property type
     events: {
         "submit #edit-form": "save",
         "submit #password-form": "changePassword",
@@ -31,10 +30,22 @@ window.EditStructureView = EditView.extend({
         this.imagesListView.availableCollection = new AvailableStructureImages({}, {
             id: this.model.get("id")
         });
-        this.id = null;
-        this.propertyTypes = new PropertyTypes(null, {idStructure: Entity.idStructure});
-        this.availablePropertyTypes = [];
+        
         var self = this;
+        
+        this.structurePropertyTypes = new StructurePropertyTypes(null, {id: Entity.idStructure});
+        this.availableStructurePropertyTypes = [];
+        this.structurePropertyTypes.fetch({
+            success: function() {
+           	 self.initializeStructurePropertyTypes();
+           	 // render again if success is called after render method.
+           	 self.render();
+           	 },
+        });
+        
+        this.id = null;
+        this.propertyTypes = new PropertyTypes(null);
+        this.availablePropertyTypes = [];	   	
         this.propertyTypes.fetch({
             success: function() {
            	 self.initializePropertyTypes();
@@ -45,6 +56,7 @@ window.EditStructureView = EditView.extend({
         
         this.availableCountries = [];
         this.availableStatus = [];
+        
         this.initializeCountries();
         this.initializeStatus();
     },
@@ -316,104 +328,38 @@ window.EditStructureView = EditView.extend({
    	 var self = this;
         _.each(self.propertyTypes.models, function (val) {
        	 self.availablePropertyTypes.push({
-       		 value_name: val.attributes.name,
-       		 value_id: val.attributes.id,
+       		 name: val.attributes.name,
+       		 id: val.attributes.id,
        		 selected: false,
        	 });
         });
         return self.availablePropertyTypes;
     },
-    
-    setPropertyTypes: function (id_propertyType) {
+    setPropertyTypes: function (idPropertyTypeArr) {
    	 var self = this;
         _.each(self.availablePropertyTypes, function (val) {
         val.selected = false;
-        if (val.value_id == id_propertyType) {
-       	 val.selected = true;
-        	}   		 
+        	for(var index = 0; index < idPropertyTypeArr.length; index++){
+        		if (val.value_id == idPropertyTypeArr[index].id_property) {
+   		       	 val.selected = true;
+   		        }
+        	}
         });
         return self.availablePropertyTypes;
     },
-    
-    render: function () {
-   	 // render main edit view
-   	 var modelToRender = this.model.toJSON();
-   	 // set additional attribute to display propertyTypes. Only for the view.
-   	 modelToRender.availablePropertyTypes = this.model.get("propertyType")? this.setPropertyTypes(this.model.get("propertyType").id) : this.setPropertyTypes( null );
-        // check for empty propertytypes
-   	 if( $.isEmptyObject(modelToRender.availablePropertyTypes)){
-   		 this.indexTemplate = $("#no-propertytype-template");
-   	 }
-   	 $(this.el).html(Mustache.to_html(this.indexTemplate.html(), modelToRender));
-        // add validation check
-        this.$(".yform").validate();
-        // renderize buttons
-        $(".btn_save").button({
-            icons: {
-                primary: "ui-icon-check"
-            }
-        });
-        //button for form reset  
-        $(".btn_reset").button({
-            icons: {
-                primary: "ui-icon-arrowreturnthick-1-w"
-            }
-        }).click(function (event) {
-            var validator = $(this).parents(".yform.json").validate();
-            validator.resetForm();
-            return false;
-        });
-        
-        // call for render associated views
-        this.renderAssociated();       
-        this.delegateEvents();
-        return this;
-    },
-	/*
-	 * Initialize Property Types from server
-	 */
-	initPropertyTypes: function() {
-		var that = this;
-		$.ajax({
-			url:'rest/property/propertyList/available',
-			success: function(data) {
-				var json = eval(data);
-				that.availablePropertyTypes = json;
-				that.renderPropertyTypes();
-			},
-			error: function(data) {
-				if (data.status==404) {
-    				$.jGrowl(data.responseText, { theme: "notify-error",header: this.alertOK,sticky: true });
-    			} else {
-    				$.jGrowl($.i18n("seriousErrorDescr") + '', { theme: "notify-error",header: this.alertOK,sticky: true });
-    			}
-			}
-		});
-	},
-    /*
-     * Get property type to post
+    /**
+     * Set the list of available structure propertyTypes.
+     * @return {Array} array of { value_name:"", value_id:"", selected: ""} objects.
      */
-    getPropertyType: function() {
-    	return $('#FormPropertyType option:selected').val();
+    initializeStructurePropertyTypes: function () {
+   	 var self = this;
+        _.each(self.structurePropertyTypes.models, function (val) {
+       	 self.availableStructurePropertyTypes.push({
+       		id_structure: val.attributes.id_structure
+       	 });
+        });
+        return self.availableStructurePropertyTypes;
     },
-	/*
-	 * Render Property types selector
-	 */
-	renderPropertyTypes: function() {
-		var model = {}
-		//set property
-		var propertyTypes = [];
-		for (t in this.availablePropertyTypes) {
-			var propertyObj = this.availablePropertyTypes[t];
-			var id = propertyObj.id;
-			var name = propertyObj.name;
-			propertyTypes.push({id:id,name:name});
-		}
-		if (propertyTypes.length > 0) {
-			model.propertyTypes = propertyTypes;
-		}
-		$('#FormPropertyType').html(Mustache.to_html($('#structure-propertyTypeList-template').html(),model));
-	},
     /**
      * Set the saved country in the list of available countries.
      * @param {String} country to be setted.
@@ -452,10 +398,24 @@ window.EditStructureView = EditView.extend({
         var modelToRender = this.model.toJSON();
         // set additional attribute to display years. Only for the view.
         modelToRender.availableCountries = this.setCountries(this.model.get("country"));
-        $(this.el).html(Mustache.to_html(this.indexTemplate.html(), modelToRender));
-        // render status select
+        // set status select
         modelToRender.availableStatus = this.setStatus(this.model.get("isEnable"));
-        $(this.el).html(Mustache.to_html(this.indexTemplate.html(), modelToRender));
+        
+      	// set additional attribute to display propertyTypes. Only for the view.
+      	modelToRender.availablePropertyTypes = this.setPropertyTypes(this.availableStructurePropertyTypes);
+      	
+      	// set additional attribute to display. Only for the view.
+      	var propertyTypeForView = "";
+      	var spTemp = this.availableStructurePropertyTypes;
+      	for(var ptIndex = 0; ptIndex < spTemp.length; ptIndex++){
+      		propertyTypeForView+=spTemp[ptIndex].id_structure + "\n";
+      	}
+
+      	modelToRender.propertyTypeIds = propertyTypeForView;
+      	
+      	// Render model
+      	$(this.el).html(Mustache.to_html(this.indexTemplate.html(), modelToRender));
+        
         // add validation check
         this.$(".yform").validate();
         // renderize buttons

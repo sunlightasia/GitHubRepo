@@ -24,7 +24,7 @@
 window.PropertyTypes = Backbone.Collection.extend({
     model: PropertyType,
     initialize: function (models, options) {
-    	this.setIdWrapper(options.idStructure);
+    	//this.setIdWrapper(options.idStructure);
     	this.setFrom(0);
     	this.setTo(7);
     	this.setTerm(null);

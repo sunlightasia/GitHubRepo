@@ -10,7 +10,7 @@ INSERT INTO `propertytype`(`name`) VALUES
 
 CREATE TABLE `structureproperty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_struture` int(11) NOT NULL,
+  `id_structure` int(11) NOT NULL,
   `id_property` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

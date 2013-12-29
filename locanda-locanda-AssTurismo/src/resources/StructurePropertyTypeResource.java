@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import utils.I18nUtils;
 
 import com.sun.jersey.api.NotFoundException;
 
-@Path("/structureProperty/")
+@Path("/structurePropertyTypes/")
 @Component
 @Scope("prototype")
 public class StructurePropertyTypeResource {
@@ -34,26 +35,11 @@ public class StructurePropertyTypeResource {
 	private StructurePropertyTypeService structurePropertyTypeService = null;
 
 	@GET
-	@Path("structure/{idStructure}/{offset}/{rownum}")
+	@Path("checked/structure/{idStructure}/{offset}/{rownum}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Map> getStructurePropertyTypes(@PathParam("idStructure") Integer idStructure, @PathParam("offset") Integer offset,
 			@PathParam("rownum") Integer rownum) {
-		List<Map> ret = null;
-		List<Integer> propertyTypeIds = null;
-		List<Integer> structurePropertyTypeIds = null;
-		Map map = null;
-
-		ret = new ArrayList<Map>();
-		structurePropertyTypeIds = this.getStructurePropertyTypeService().findIdByIdStructure(idStructure, offset, rownum);
-		for (Integer each : structurePropertyTypeIds) {
-			Integer propertyId = this.getStructurePropertyTypeService().findPropertyIdById(each);
-			map = new HashMap();
-			map.put("id", each);
-			map.put("idStructure", idStructure);
-			map.put("propertyType", this.getPropertyTypeService().findPropertyById(propertyId));
-			ret.add(map);
-		}
-		return ret;
+		return this.getStructurePropertyTypeService().findByIdStructure(idStructure, offset, rownum);
 	}
 
 	@POST

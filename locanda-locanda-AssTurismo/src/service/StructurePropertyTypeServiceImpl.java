@@ -103,6 +103,15 @@ public class StructurePropertyTypeServiceImpl implements StructurePropertyTypeSe
 	public Integer deleteByIdStructure(Integer id_propertyType) {
 		return this.getStructurePropertyMapper().deleteByIdStructure(id_propertyType);
 	}
+	
+	@Override
+	public List<Map> findByIdStructure(Integer id_structure, Integer offset, Integer rownum) {
+		Map map = new HashMap();
+		map.put("id_structure", id_structure);
+		map.put("offset", offset);
+		map.put("rownum", rownum);
+		return this.getStructurePropertyMapper().findByIdStructure(map);
+	}
 
 	public StructurePropertyMapper getStructurePropertyMapper() {
 		return structurePropertyMapper;
@@ -111,5 +120,4 @@ public class StructurePropertyTypeServiceImpl implements StructurePropertyTypeSe
 	public void setStructurePropertyMapper(StructurePropertyMapper structurePropertyMapper) {
 		this.structurePropertyMapper = structurePropertyMapper;
 	}
-
 }

@@ -16,6 +16,7 @@
 package service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public interface StructurePropertyTypeService {
 	
 	public List<Integer> findIdPropertyByIdStructure(Integer id_structure, Integer offset, Integer rownum);
 	public List<Integer> findIdByIdStructure(Integer id_structure, Integer offset, Integer rownum);
+	public List<Map> findByIdStructure(Integer id_structure, Integer offset, Integer rownum);
 	public Integer findPropertyIdById(Integer id);
 	public Integer findIdByIdStructureAndIdProperty(Integer id_structure, Integer id_property );
 	
